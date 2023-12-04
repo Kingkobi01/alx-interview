@@ -8,14 +8,19 @@ def pascal_triangle(n):
     the Pascal's triangle of a given integer.
     """
     triangle = []
-    if type(n) is not int or n <= 0:
+    if n <= 0:
         return triangle
-    for i in range(n):
-        line = []
-        for j in range(i + 1):
-            if j == 0 or j == i:
-                line.append(1)
-            elif i > 0 and j > 0:
-                line.append(triangle[i - 1][j - 1] + triangle[i - 1][j])
-        triangle.append(line)
+    triangle.append([1])
+    if n == 1:
+        return triangle
+
+    for _ in range(n - 1):
+        padded_previous_row = [0] + triangle[-1] + [0]
+
+        current_row = []
+        for idx in range(len(triangle[-1]) + 1):
+            new_value = padded_previous_row[idx] + padded_previous_row[idx + 1]
+            current_row.append(new_value)
+        triangle.append(current_row)
+
     return triangle
